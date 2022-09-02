@@ -2,17 +2,29 @@ import { Asset } from "models/asset";
 import { useApi } from "services/api";
 import AssetPreview from "components/asset-preview";
 
-import styles from "./external-image.module.css";
+import styles from "./asset-picker.module.css";
 
-const NFTPicker = ({ address }: { address: string }) => {
+const AssetPicker = ({
+  address,
+  onSelectItem,
+}: {
+  address: string;
+  onSelectItem: any;
+}) => {
   const { data } = useApi<{ assets: Asset[] }>(`${address}/assets/`);
 
   const assets = !data ? [] : data.assets;
 
   return (
-    <div className={styles.assetsContainer}>
+    <div className={styles.container}>
       {assets.map((asset) => (
-        <div key={asset.id} className={styles.asset} onClick={() => {}}>
+        <div
+          key={asset.id}
+          className={styles.item}
+          onClick={() => {
+            onSelectItem(asset);
+          }}
+        >
           <AssetPreview asset={asset} />
         </div>
       ))}
@@ -20,4 +32,4 @@ const NFTPicker = ({ address }: { address: string }) => {
   );
 };
 
-export default NFTPicker;
+export default AssetPicker;

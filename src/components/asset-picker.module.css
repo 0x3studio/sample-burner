@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  padding: 0.5rem;
+  width: 26rem;
+  height: 26rem;
+  overflow: auto;
+  box-shadow: 0.25em 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+}
+.item {
+  flex-basis: 8rem;
+  cursor: pointer;
+}

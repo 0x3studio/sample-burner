@@ -4,12 +4,16 @@ import { useAccount } from "wagmi";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import NFTPicker from "components/nft-picker";
+import AssetPicker from "components/asset-picker";
+import AssetPreview from "components/asset-preview";
 
 import styles from "styles/Home.module.css";
 
 const Home: NextPage = () => {
   const [isConnected, setIsConnected] = useState(false);
+  const [visibleAssetPicker, setVisibleAssetPicker] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState(null);
+
   const { address } = useAccount();
 
   useEffect(() => {
@@ -28,13 +32,41 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <ConnectButton />
+        <ConnectButton showBalance={false} chainStatus="none" />
         <h1>Burner</h1>
         <h2>by 0x3 Studio</h2>
         {isConnected && (
           <>
-            <button>Select an NFT to burn</button>
-            <NFTPicker address={address} />
+            {selectedAsset ? (
+              <>
+                <p>You have selected an asset.</p>
+                <AssetPreview asset={selectedAsset} />
+                <button onClick={() => {}}>Confirm</button>
+                <button
+                  onClick={() => {
+                    setSelectedAsset(null);
+                  }}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setVisibleAssetPicker(true);
+                  }}
+                >
+                  Select an NFT to burn
+                </button>
+                {address && visibleAssetPicker && (
+                  <AssetPicker
+                    address={address}
+                    onSelectItem={(asset: any) => setSelectedAsset(asset)}
+                  />
+                )}
+              </>
+            )}
           </>
         )}
       </main>

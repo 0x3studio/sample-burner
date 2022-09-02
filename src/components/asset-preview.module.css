@@ -1,5 +1,5 @@
 .assetPreview {
-  border-radius: 5%;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: var(--asset-background-color);
   aspect-ratio: 1;
